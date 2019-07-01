@@ -1,0 +1,2 @@
+export const baseUrl = (process.env.NODE_ENV !== 'production' ? 'http://localhost:3001/' : 'https://confunsionserver.herokuapp.com/');
+export const HOME_URL = (process.env.NODE_ENV !== 'production' ? '/' : 'https://hlockward.github.io/confunsion/');
