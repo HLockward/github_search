@@ -33,7 +33,7 @@ class SearchForm extends Component{
                             }
                         />
                         
-                        <InputGroupAddon addonType="append"><Button color="secondary"><i class="fa fa-search"></i></Button></InputGroupAddon>
+                        <InputGroupAddon addonType="append"><Button color="secondary"><i className="fa fa-search"></i></Button></InputGroupAddon>
                     </InputGroup>
                     <Errors
                             className="text-danger"
