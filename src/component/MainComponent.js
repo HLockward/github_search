@@ -16,21 +16,41 @@ const mapDispatchToProps = (dispatch) => ({
     fetchRepositories: (organization) => {dispatch(fetchRepositories(organization))}
 });
 
+
+function getParams(location) {
+    const searchParams = new URLSearchParams(location.search);
+    return {
+      query: searchParams.get("query") || ""
+    };
+}
+  
 class Main extends Component {  
 
-    componentDidMount(){
-       
+    componentDidMount() {
+        const { location} = this.props;
+        const { query } = getParams(location);
+        return this.props.fetchRepositories(query);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.query !== this.props.query) {
+          return this.props.fetchRepositories(nextProps.query);
+        }
     }
 
     render() {
 
         const HomePage = () => {
+            const {history, location} = this.props;
+            const { query } = getParams(location);
             return(
                 <Home 
                 search = {this.props.fetchRepositories}
                 repositories = {this.props.repositories.repositories}
                 isLoading={this.props.repositories.isLoading}
                 errMess={this.props.repositories.errorMessage}
+                history={history}
+                query={query}
                 />
             );
         }
@@ -39,7 +59,6 @@ class Main extends Component {
                 <Header />
                     <Switch>
                         <Route path='/home' component={HomePage} />
-                        
                         <Redirect to="/home" />
                     </Switch>
                 <Footer />

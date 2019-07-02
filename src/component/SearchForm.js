@@ -6,10 +6,19 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
+function setParams({ query }) {
+    const searchParams = new URLSearchParams();
+    searchParams.set("query", query || "");
+    return searchParams.toString();
+  }
+
+
 class SearchForm extends Component{
 
     handleSubmit(value){
-        const org = value.search;    
+        const org = value.search;
+        const url = setParams({ query: org });
+        this.props.history.push(`?${url}`);  
         this.props.search(org); 
     }
 
