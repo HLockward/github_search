@@ -4,7 +4,7 @@ export const Repositories = (
 state = {
     isLoading : true, 
     errorMessage : null, 
-    repositories : []
+    repositories : null
 }, 
 action) => {
     switch (action.type) {

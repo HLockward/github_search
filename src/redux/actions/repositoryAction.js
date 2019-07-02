@@ -2,10 +2,10 @@ import * as ActionTypes from './actionTypes';
 import { baseUrl } from '../../shared/baseUrl';
 
 /** repositories */
-export const fetchRepositories = () => (dispatch) => {
+export const fetchRepositories = (organization) => (dispatch) => {
     dispatch(repositoriesLoading(true));
 
-    return fetch(baseUrl + 'repositories')
+    return fetch(baseUrl + organization +'/repos')
         .then(response => {
             if(response.ok){
                 return response;

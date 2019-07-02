@@ -7,14 +7,10 @@ const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
 class SearchForm extends Component{
-    constructor(props){
-        super(props);
-    }
 
     handleSubmit(value){
-        alert('funciona');
-        /*const org = value.search;    
-        this.props.search(org); */   
+        const org = value.search;    
+        this.props.search(org); 
     }
 
     render(){
