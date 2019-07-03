@@ -5,7 +5,7 @@ import { baseUrl } from '../../shared/baseUrl';
 export const fetchRepositories = (organization) => (dispatch) => {
     dispatch(repositoriesLoading(true));
 
-    return fetch(baseUrl + organization +'/repos')
+    return fetch(baseUrl +'orgs/'+ organization +'/repos')
         .then(response => {
             if(response.ok){
                 return response;

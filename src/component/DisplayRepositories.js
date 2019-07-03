@@ -1,8 +1,15 @@
 import React from 'react';
 import { Card, CardText, CardBody,CardTitle, CardSubtitle} from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
-const DisplayRepositories = ({items, isLoading, errMess}) => {
+const DisplayRepositories = (props) => {
+    const {items, isLoading, errMess, org} = props;
+
+    const pushHistory = (org,repo) =>{
+        props.history.push(`?query=${org}&repo=${repo}`);
+        props.getBranches(org,repo);
+    }
     if (isLoading) {
         return(
             <Loading />
@@ -15,11 +22,13 @@ const DisplayRepositories = ({items, isLoading, errMess}) => {
     }
     else {
         return( 
+            
             <div>
+                <h2>{`My organization: ${org}`}</h2>
                 {items.map((item) => 
                     <Card key={item.id}>
                         <CardBody>
-                        <CardTitle>{item.name}</CardTitle>
+                        <CardTitle><Link onClick={() => pushHistory(org,item.name)} to={`/branches?query=${org}&repo=${item.name}`}>{item.name}</Link></CardTitle>
                         <CardSubtitle>{`starts ${item.forks}`}</CardSubtitle>
                         <CardSubtitle>{`forks ${item.stargazers_count}`}</CardSubtitle>
                         <CardSubtitle>{`forks ${item.language}`}</CardSubtitle>

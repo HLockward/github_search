@@ -32,7 +32,6 @@ class SearchForm extends Component{
     }
 
     render(){
-        console.log(this.props.language);
         return(
             <div>
                <LocalForm onSubmit={(values) => this.handleSubmit(values)}>

@@ -17,8 +17,7 @@ function Home(props) {
                 languageSelected = {props.languageSelected}
                 
             />
-            <h2>{`My organization: ${query}`}</h2>
-            {props.repositories == null ? '' : <DisplayRepositories items={props.repositories} isLoading={props.isLoading} errMess={props.errMess}/>}
+            {props.repositories == null ? '' : <DisplayRepositories getBranches={props.getBranches} history={history} org={query} items={props.repositories} isLoading={props.isLoading} errMess={props.errMess}/>}
         </div>
     );
 }

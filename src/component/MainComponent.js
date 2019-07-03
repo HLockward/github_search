@@ -2,27 +2,32 @@ import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
+import BranchList from './BranchComponent';
 import {fetchRepositories, repositoriesSort, repositoriesFilter} from '../redux/actions/repositoryAction';
+import {fetchBranches} from '../redux/actions/repoBranchActions';
 import { Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state =>{
     return{
-        repositories : state.repositories
+        repositories : state.repositories,
+        branches : state.branches
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     fetchRepositories: (organization) => {dispatch(fetchRepositories(organization))},
     repositoriesSort: (sortType) => {dispatch(repositoriesSort(sortType))},
-    repositoriesFilter: (filter) => {dispatch(repositoriesFilter(filter))}
+    repositoriesFilter: (filter) => {dispatch(repositoriesFilter(filter))},
+    fetchBranches: (org, repo) => {dispatch(fetchBranches(org, repo))}
 });
 
 
 function getParams(location) {
     const searchParams = new URLSearchParams(location.search);
     return {
-      query: searchParams.get("query") || ""
+      query: searchParams.get("query") || "",
+      repository: searchParams.get("repo") || ""
     };
 }
   
@@ -30,13 +35,22 @@ class Main extends Component {
 
     componentDidMount() {
         const { location} = this.props;
-        const { query } = getParams(location);
-        return this.props.fetchRepositories(query);
+        const { query, repository } = getParams(location);
+        console.log(repository);
+        this.props.fetchRepositories(query);
+        console.log(repository);
+        if(repository){
+            this.props.fetchBranches(query, repository);
+        }
+
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.query !== this.props.query) {
-          return this.props.fetchRepositories(nextProps.query);
+            this.props.fetchRepositories(nextProps.query);
+        }
+        if (nextProps.query !== this.props.query || nextProps.repository !== this.props.repository) {
+            this.props.fetchBranches(this.props.query, this.props.repository);
         }
     }
 
@@ -58,14 +72,32 @@ class Main extends Component {
                 language = {this.props.repositories.language}
                 repositoriesFilter = {this.props.repositoriesFilter}
                 languageSelected = {this.props.repositories.languageSelected}
+                getBranches = {this.props.fetchBranches}
                 />
             );
         }
+
+        const BranchPage = () => {
+            const {history, location} = this.props;
+            const { query, repository } = getParams(location);
+            return(
+                <BranchList 
+                    history={history}
+                    query={query}
+                    repo={repository}
+                    branches = {this.props.branches.branches}
+                    isLoading={this.props.branches.isLoading}
+                    errMess={this.props.branches.errorMessage}
+                />
+            );
+        }
+
         return (
             <div className="App">
                 <Header />
                     <Switch>
                         <Route path='/home' component={HomePage} />
+                        <Route path='/branches' component={BranchPage} />
                         <Redirect to="/home" />
                     </Switch>
                 <Footer />
