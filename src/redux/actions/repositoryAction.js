@@ -46,3 +46,13 @@ export const repositoriesSortStar = (sortType) =>({
     type: ActionTypes.SORT_REPOSITORIES_STARS,
     payload: sortType
 });
+
+export const repositoriesFilter = (filter) => (dispatch) => {
+    dispatch(repositoriesFilterLanguage(filter));
+};
+
+
+export const repositoriesFilterLanguage = (filterLanguage) =>({
+    type: ActionTypes.FILTER_REPOSITORIES_LANGUAGE,
+    payload: filterLanguage
+});

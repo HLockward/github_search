@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
-import {fetchRepositories, repositoriesSort} from '../redux/actions/repositoryAction';
+import {fetchRepositories, repositoriesSort, repositoriesFilter} from '../redux/actions/repositoryAction';
 import { Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -14,7 +14,8 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = (dispatch) => ({
     fetchRepositories: (organization) => {dispatch(fetchRepositories(organization))},
-    repositoriesSort: (sortType) => {dispatch(repositoriesSort(sortType))}
+    repositoriesSort: (sortType) => {dispatch(repositoriesSort(sortType))},
+    repositoriesFilter: (filter) => {dispatch(repositoriesFilter(filter))}
 });
 
 
@@ -54,6 +55,9 @@ class Main extends Component {
                 query={query}
                 repositoriesSort = {this.props.repositoriesSort}
                 isStarSortAsc = {this.props.repositories.isStarSortAsc}
+                language = {this.props.repositories.language}
+                repositoriesFilter = {this.props.repositoriesFilter}
+                languageSelected = {this.props.repositories.languageSelected}
                 />
             );
         }

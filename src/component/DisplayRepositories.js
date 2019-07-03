@@ -22,6 +22,7 @@ const DisplayRepositories = ({items, isLoading, errMess}) => {
                         <CardTitle>{item.name}</CardTitle>
                         <CardSubtitle>{`starts ${item.forks}`}</CardSubtitle>
                         <CardSubtitle>{`forks ${item.stargazers_count}`}</CardSubtitle>
+                        <CardSubtitle>{`forks ${item.language}`}</CardSubtitle>
                         <CardText>{item.description}</CardText>
                         </CardBody>
                     </Card>

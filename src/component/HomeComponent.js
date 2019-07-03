@@ -12,6 +12,10 @@ function Home(props) {
                 history={history} 
                 query={query}
                 isStarSortAsc ={props.isStarSortAsc}
+                repositoriesFilter = {props.repositoriesFilter}
+                language = {props.language}
+                languageSelected = {props.languageSelected}
+                
             />
             <h2>{`My organization: ${query}`}</h2>
             {props.repositories == null ? '' : <DisplayRepositories items={props.repositories} isLoading={props.isLoading} errMess={props.errMess}/>}

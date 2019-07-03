@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Control, LocalForm, Errors} from 'react-redux-form';
-import { Button, FormGroup, InputGroupAddon, InputGroup,ButtonGroup } from 'reactstrap';
+import { Button, FormGroup, InputGroupAddon, InputGroup,Col,Label,Input } from 'reactstrap';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -16,8 +16,12 @@ function setParams({ query }) {
 class SearchForm extends Component{
 
 
-    onRadioBtnClick() {
+    onBtnClick() {
         this.props.repositoriesSort(!this.props.isStarSortAsc);
+    }
+
+    onSelectChange(e){
+        this.props.repositoriesFilter(e.target.value);
     }
 
     handleSubmit(value){
@@ -28,6 +32,7 @@ class SearchForm extends Component{
     }
 
     render(){
+        console.log(this.props.language);
         return(
             <div>
                <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
@@ -57,22 +62,29 @@ class SearchForm extends Component{
                         />
                 </FormGroup>
                 <FormGroup>
-                    <ButtonGroup>
-                        <Button color="warning" onClick={() => this.onRadioBtnClick(1)} active={this.props.isStarSortAsc}>
-                            {this.props.isStarSortAsc ? 
-                                <div>
-                                    <i className="fa fa-star fa-lg"></i>
-                                    <i className="fa fa-arrow-down fa-lg"></i>
-                                </div>
-                            : 
-                                <div>
-                                    <i className="fa fa-star fa-lg"></i>
-                                    <i className="fa fa-arrow-up fa-lg"></i>
-                                </div>
-                            }
-                        </Button>
-                    </ButtonGroup>
+                    <Button className="" color="warning" onClick={() => this.onBtnClick()} active={this.props.isStarSortAsc}>
+                        {this.props.isStarSortAsc ? 
+                            <div>
+                                <i className="fa fa-star fa-lg"></i>
+                                <i className="fa fa-arrow-down fa-lg"></i>
+                            </div>
+                        : 
+                            <div>
+                                <i className="fa fa-star fa-lg"></i>
+                                <i className="fa fa-arrow-up fa-lg"></i>
+                            </div>
+                        }
+                    </Button>
+
+                    <Label for="exampleSelect">Select Language</Label>
+                    <Col sm={5}>
+                        <Input type="select" name="select" id="exampleSelect" value={this.props.languageSelected} onChange={(e) => this.onSelectChange(e)}>
+                            <option>ALL</option>
+                            {this.props.language == null ? '' : this.props.language.map(language => <option key={language}>{language}</option>)}
+                        </Input>
+                    </Col>
                 </FormGroup>
+
             </LocalForm>
             
             </div>
