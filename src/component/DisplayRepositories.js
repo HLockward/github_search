@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardText, CardBody,CardTitle} from 'reactstrap';
+import { Card, CardText, CardBody,CardTitle, CardSubtitle} from 'reactstrap';
 import { Loading } from './LoadingComponent';
 
 const DisplayRepositories = ({items, isLoading, errMess}) => {
@@ -20,6 +20,8 @@ const DisplayRepositories = ({items, isLoading, errMess}) => {
                     <Card key={item.id}>
                         <CardBody>
                         <CardTitle>{item.name}</CardTitle>
+                        <CardSubtitle>{`starts ${item.forks}`}</CardSubtitle>
+                        <CardSubtitle>{`forks ${item.stargazers_count}`}</CardSubtitle>
                         <CardText>{item.description}</CardText>
                         </CardBody>
                     </Card>

@@ -36,3 +36,13 @@ export const repositoriesFailed = (errmess) =>({
     type: ActionTypes.REPOSITORIES_FAILED,
     payload: errmess
 });
+
+export const repositoriesSort = (sortType) => (dispatch) => {
+    dispatch(repositoriesSortStar(sortType));
+};
+
+
+export const repositoriesSortStar = (sortType) =>({
+    type: ActionTypes.SORT_REPOSITORIES_STARS,
+    payload: sortType
+});
