@@ -47,6 +47,16 @@ export const repositoriesSortStar = (sortType) =>({
     payload: sortType
 });
 
+export const repositoriesSortByFork = (sortType) => (dispatch) => {
+    dispatch(repositoriesSortFork(sortType));
+};
+
+
+export const repositoriesSortFork = (sortType) =>({
+    type: ActionTypes.SORT_REPOSITORIES_FORK,
+    payload: sortType
+});
+
 export const repositoriesFilter = (filter) => (dispatch) => {
     dispatch(repositoriesFilterLanguage(filter));
 };

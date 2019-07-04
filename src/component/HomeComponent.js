@@ -15,6 +15,8 @@ function Home(props) {
                 repositoriesFilter = {props.repositoriesFilter}
                 language = {props.language}
                 languageSelected = {props.languageSelected}
+                repositoriesSortByFork ={props.repositoriesSortByFork}
+                isForkSortAsc ={props.isForkSortAsc}
                 
             />
             {props.repositories == null ? '' : <DisplayRepositories getBranches={props.getBranches} history={history} org={query} items={props.repositories} isLoading={props.isLoading} errMess={props.errMess}/>}

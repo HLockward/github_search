@@ -3,7 +3,7 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import BranchList from './BranchComponent';
-import {fetchRepositories, repositoriesSort, repositoriesFilter} from '../redux/actions/repositoryAction';
+import {fetchRepositories, repositoriesSort,repositoriesSortByFork, repositoriesFilter} from '../redux/actions/repositoryAction';
 import {fetchBranches} from '../redux/actions/repoBranchActions';
 import { Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchRepositories: (organization) => {dispatch(fetchRepositories(organization))},
     repositoriesSort: (sortType) => {dispatch(repositoriesSort(sortType))},
     repositoriesFilter: (filter) => {dispatch(repositoriesFilter(filter))},
+    repositoriesSortByFork: (sortType) => {dispatch(repositoriesSortByFork(sortType))},
     fetchBranches: (org, repo) => {dispatch(fetchBranches(org, repo))}
 });
 
@@ -68,7 +69,9 @@ class Main extends Component {
                 history={history}
                 query={query}
                 repositoriesSort = {this.props.repositoriesSort}
+                repositoriesSortByFork = {this.props.repositoriesSortByFork}
                 isStarSortAsc = {this.props.repositories.isStarSortAsc}
+                isForkSortAsc = {this.props.repositories.isForkSortAsc}
                 language = {this.props.repositories.language}
                 repositoriesFilter = {this.props.repositoriesFilter}
                 languageSelected = {this.props.repositories.languageSelected}

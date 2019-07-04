@@ -16,8 +16,12 @@ function setParams({ query }) {
 class SearchForm extends Component{
 
 
-    onBtnClick() {
+    onStartBtnClick() {
         this.props.repositoriesSort(!this.props.isStarSortAsc);
+    }
+
+    onForkBtnClick() {
+        this.props.repositoriesSortByFork(!this.props.isForkSortAsc);
     }
 
     onSelectChange(e){
@@ -59,31 +63,29 @@ class SearchForm extends Component{
                                 maxLength: 'Must be 15 characters or less '
                             }} 
                         />
-                </FormGroup>
-                <FormGroup>
-                    <Button className="" color="warning" onClick={() => this.onBtnClick()} active={this.props.isStarSortAsc}>
-                        {this.props.isStarSortAsc ? 
-                            <div>
-                                <i className="fa fa-star fa-lg"></i>
-                                <i className="fa fa-arrow-down fa-lg"></i>
-                            </div>
-                        : 
-                            <div>
-                                <i className="fa fa-star fa-lg"></i>
-                                <i className="fa fa-arrow-up fa-lg"></i>
-                            </div>
-                        }
+                </FormGroup>  
+                <FormGroup row>
+                <Col md={2}>
+                    <Button color="warning" onClick={() => this.onStartBtnClick()} active={this.props.isStarSortAsc}>
+                        <i className="fa fa-star fa-lg"></i>
+                        {this.props.isStarSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i>}
                     </Button>
-
-                    <Label for="exampleSelect">Select Language</Label>
-                    <Col sm={5}>
-                        <Input type="select" name="select" id="exampleSelect" value={this.props.languageSelected} onChange={(e) => this.onSelectChange(e)}>
-                            <option>ALL</option>
-                            {this.props.language == null ? '' : this.props.language.map(language => <option key={language}>{language}</option>)}
-                        </Input>
-                    </Col>
+                </Col>
+                <Col md={2}>   
+                    <Button color="primary" onClick={() => this.onForkBtnClick()} active={this.props.isForkSortAsc}>
+                        FORK {this.props.isForkSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i> }
+                    </Button>
+                </Col>
+                <Col md={2}>
+                    <Label className="offset-md-2" for="ddlLanguage">Select Language:</Label>
+                </Col>
+                <Col md={6}>
+                    <Input type="select" name="select" id="ddlLanguage" value={this.props.languageSelected} onChange={(e) => this.onSelectChange(e)}>
+                        <option>ALL</option>
+                        {this.props.language == null ? '' : this.props.language.map(language => <option key={language}>{language}</option>)}
+                    </Input>
+                </Col>    
                 </FormGroup>
-
             </LocalForm>
             
             </div>
