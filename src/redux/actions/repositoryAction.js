@@ -5,7 +5,7 @@ import { baseUrl } from '../../shared/baseUrl';
 export const fetchRepositories = (organization) => (dispatch) => {
     dispatch(repositoriesLoading(true));
 
-    return fetch(baseUrl +'orgs/'+ organization +'/repos')
+    return fetch(baseUrl +'orgs/'+ organization +'/repos?page=1&per_page=10')
         .then(response => {
             if(response.ok){
                 return response;
@@ -35,6 +35,36 @@ export const addRepositories = (repositories) =>({
 export const repositoriesFailed = (errmess) =>({
     type: ActionTypes.REPOSITORIES_FAILED,
     payload: errmess
+});
+
+export const fetchMoreRepositories = (organization,page) => (dispatch) => {
+    dispatch(moreRepositoriesLoading(true));
+
+    return fetch(baseUrl +'orgs/'+ organization +'/repos?page=' +page+ '&per_page=10')
+        .then(response => {
+            if(response.ok){
+                return response;
+            }else{
+                var error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        }, error =>{
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(repositories => dispatch(addMoreRepositories(repositories)))
+        .catch(error => dispatch(repositoriesFailed(error.message)));
+};
+
+export const moreRepositoriesLoading = () =>({
+    type: ActionTypes.MORE_REPOSITORIES_LOADING
+});
+
+export const addMoreRepositories = (repositories) =>({
+    type: ActionTypes.ADD_MORE_REPOSITORIES,
+    payload: repositories
 });
 
 export const repositoriesSort = (sortType) => (dispatch) => {

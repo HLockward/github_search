@@ -9,17 +9,27 @@ state = {
     isForkSortAsc : false,
     language : [],
     originalRepositories : null,
-    languageSelected : 'ALL'
+    languageSelected : 'ALL',
+    actualPage: 0
 }, 
 action) => {
     switch (action.type) {
         case actionTypes.ADD_REPOSITORIES:
             return {...state, isLoading : false, errorMessage : null, isStarSortAsc : false, isForkSortAsc : false, repositories: action.payload,
-                originalRepositories: action.payload, 
+                originalRepositories: action.payload, actualPage: 1,
                 language: [...new Set(action.payload.map(x => x.language))]};
-
+        
+                case actionTypes.ADD_MORE_REPOSITORIES:
+                return {...state, isLoading : false, errorMessage : null, repositories:[].concat(state.repositories, action.payload) ,
+                    originalRepositories:[].concat(state.originalRepositories, action.payload), actualPage: state.actualPage + 1,
+                    language: [ ...new Set([...state.language , ...new Set(action.payload.map(x => x.language))]) ]
+                };
+                
         case actionTypes.REPOSITORIES_LOADING:
             return {...state, isLoading : true, errorMessage : null, isStarSortAsc : false,  repositories: []};
+            
+        case actionTypes.MORE_REPOSITORIES_LOADING:
+            return {...state, isLoading : true, errorMessage : null, isStarSortAsc : false };
             
         case actionTypes.REPOSITORIES_FAILED:
             return {...state, isLoading : false, errorMessage : action.payload, isStarSortAsc : false};

@@ -8,7 +8,8 @@ function Home(props) {
         <div className="container">
             <SearchForm 
                 repositoriesSort={props.repositoriesSort}
-                search={props.search} 
+                search={props.search}
+                getOrganization={props.getOrganization} 
                 history={history} 
                 query={query}
                 isStarSortAsc ={props.isStarSortAsc}
@@ -19,7 +20,19 @@ function Home(props) {
                 isForkSortAsc ={props.isForkSortAsc}
                 
             />
-            {props.repositories == null ? '' : <DisplayRepositories getBranches={props.getBranches} history={history} org={query} items={props.repositories} isLoading={props.isLoading} errMess={props.errMess}/>}
+            {props.repositories == null ? '' : 
+                <DisplayRepositories 
+                    organization={props.organization} 
+                    getBranches={props.getBranches} 
+                    history={history} 
+                    org={query} 
+                    items={props.repositories} 
+                    isLoading={props.isLoading} 
+                    errMess={props.errMess}
+                    getMoreRepositories = {props.fetchMoreRepositories}
+                    actualPage={props.actualPage}
+                />
+            }
         </div>
     );
 }

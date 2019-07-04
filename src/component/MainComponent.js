@@ -3,15 +3,17 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import BranchList from './BranchComponent';
-import {fetchRepositories, repositoriesSort,repositoriesSortByFork, repositoriesFilter} from '../redux/actions/repositoryAction';
+import {fetchRepositories, repositoriesSort,repositoriesSortByFork, repositoriesFilter, fetchMoreRepositories} from '../redux/actions/repositoryAction';
 import {fetchBranches} from '../redux/actions/repoBranchActions';
+import {fetchOrganization} from '../redux/actions/organizationActions';
 import { Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state =>{
     return{
         repositories : state.repositories,
-        branches : state.branches
+        branches : state.branches,
+        organization : state.organization
     }
 };
 
@@ -20,7 +22,9 @@ const mapDispatchToProps = (dispatch) => ({
     repositoriesSort: (sortType) => {dispatch(repositoriesSort(sortType))},
     repositoriesFilter: (filter) => {dispatch(repositoriesFilter(filter))},
     repositoriesSortByFork: (sortType) => {dispatch(repositoriesSortByFork(sortType))},
-    fetchBranches: (org, repo) => {dispatch(fetchBranches(org, repo))}
+    fetchBranches: (org, repo) => {dispatch(fetchBranches(org, repo))},
+    fetchOrganization: (org) => {dispatch(fetchOrganization(org))},
+    fetchMoreRepositories: (org,page) => {dispatch(fetchMoreRepositories(org,page))}
 });
 
 
@@ -38,6 +42,7 @@ class Main extends Component {
         const { location} = this.props;
         const { query, repository } = getParams(location);
         console.log(repository);
+        this.props.fetchOrganization(query);
         this.props.fetchRepositories(query);
         console.log(repository);
         if(repository){
@@ -48,6 +53,7 @@ class Main extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.query !== this.props.query) {
+            this.props.fetchOrganization(nextProps.query);
             this.props.fetchRepositories(nextProps.query);
         }
         if (nextProps.query !== this.props.query || nextProps.repository !== this.props.repository) {
@@ -63,6 +69,8 @@ class Main extends Component {
             return(
                 <Home 
                 search = {this.props.fetchRepositories}
+                getOrganization = {this.props.fetchOrganization}
+                organization = {this.props.organization.organization}
                 repositories = {this.props.repositories.repositories}
                 isLoading={this.props.repositories.isLoading}
                 errMess={this.props.repositories.errorMessage}
@@ -76,6 +84,8 @@ class Main extends Component {
                 repositoriesFilter = {this.props.repositoriesFilter}
                 languageSelected = {this.props.repositories.languageSelected}
                 getBranches = {this.props.fetchBranches}
+                fetchMoreRepositories = {this.props.fetchMoreRepositories}
+                actualPage = {this.props.repositories.actualPage}
                 />
             );
         }

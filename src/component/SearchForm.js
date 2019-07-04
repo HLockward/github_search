@@ -31,7 +31,8 @@ class SearchForm extends Component{
     handleSubmit(value){
         const org = value.search;
         const url = setParams({ query: org });
-        this.props.history.push(`?${url}`);  
+        this.props.history.push(`?${url}`);
+        this.props.getOrganization(org);  
         this.props.search(org); 
     }
 
