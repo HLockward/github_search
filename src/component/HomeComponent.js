@@ -18,7 +18,7 @@ function Home(props) {
                 languageSelected = {props.languageSelected}
                 repositoriesSortByFork ={props.repositoriesSortByFork}
                 isForkSortAsc ={props.isForkSortAsc}
-                
+                organization={props.organization}
             />
             {props.repositories == null ? '' : 
                 <DisplayRepositories 

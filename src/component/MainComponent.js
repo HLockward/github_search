@@ -41,9 +41,10 @@ class Main extends Component {
     componentDidMount() {
         const { location} = this.props;
         const { query, repository } = getParams(location);
-        console.log(repository);
-        this.props.fetchOrganization(query);
-        this.props.fetchRepositories(query);
+        if(query){
+            this.props.fetchOrganization(query);
+            this.props.fetchRepositories(query);
+        }
         console.log(repository);
         if(repository){
             this.props.fetchBranches(query, repository);

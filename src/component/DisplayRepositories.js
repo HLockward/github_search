@@ -25,7 +25,7 @@ const DisplayRepositories = (props) => {
         return( 
             
             <div>
-                <h2>{`My organization: ${org}`}</h2>
+                <h2>{`My organization: ${props.organization.login}`}</h2>
                 {items.map((item) => 
                     <Card key={item.id}>
                         <CardBody>

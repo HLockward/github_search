@@ -65,28 +65,32 @@ class SearchForm extends Component{
                             }} 
                         />
                 </FormGroup>  
-                <FormGroup row>
-                <Col md={2}>
-                    <Button color="warning" onClick={() => this.onStartBtnClick()} active={this.props.isStarSortAsc}>
-                        <i className="fa fa-star fa-lg"></i>
-                        {this.props.isStarSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i>}
-                    </Button>
-                </Col>
-                <Col md={2}>   
-                    <Button color="primary" onClick={() => this.onForkBtnClick()} active={this.props.isForkSortAsc}>
-                        FORK {this.props.isForkSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i> }
-                    </Button>
-                </Col>
-                <Col md={2}>
-                    <Label className="offset-md-2" for="ddlLanguage">Select Language:</Label>
-                </Col>
-                <Col md={6}>
-                    <Input type="select" name="select" id="ddlLanguage" value={this.props.languageSelected} onChange={(e) => this.onSelectChange(e)}>
-                        <option>ALL</option>
-                        {this.props.language == null ? '' : this.props.language.map(language => <option key={language}>{language}</option>)}
-                    </Input>
-                </Col>    
-                </FormGroup>
+                {this.props.organization ? 
+                    <FormGroup row>
+                        <Col md={2}>
+                            <Button color="warning" onClick={() => this.onStartBtnClick()} active={this.props.isStarSortAsc}>
+                                <i className="fa fa-star fa-lg"></i>
+                                {this.props.isStarSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i>}
+                            </Button>
+                        </Col>
+                        <Col md={2}>   
+                            <Button color="primary" onClick={() => this.onForkBtnClick()} active={this.props.isForkSortAsc}>
+                                FORK {this.props.isForkSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i> }
+                            </Button>
+                        </Col>
+                        <Col md={2}>
+                            <Label className="offset-md-2" for="ddlLanguage">Select Language:</Label>
+                        </Col>
+                        <Col md={6}>
+                            <Input type="select" name="select" id="ddlLanguage" value={this.props.languageSelected} onChange={(e) => this.onSelectChange(e)}>
+                                <option>ALL</option>
+                                {this.props.language == null ? '' : this.props.language.map(language => <option key={language}>{language}</option>)}
+                            </Input>
+                        </Col>    
+                    </FormGroup>
+                :
+                ''
+                }
             </LocalForm>
             
             </div>
