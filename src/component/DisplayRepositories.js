@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardText, CardBody,CardTitle, CardSubtitle, Button} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const DisplayRepositories = (props) => {
     const {items, isLoading, errMess, org} = props;
@@ -30,8 +31,14 @@ const DisplayRepositories = (props) => {
                     <Card key={item.id}>
                         <CardBody>
                         <CardTitle><Link onClick={() => pushHistory(org,item.name)} to={`/branches?query=${org}&repo=${item.name}`}>{item.name}</Link></CardTitle>
-                        <CardSubtitle>{`starts ${item.forks}`}</CardSubtitle>
-                        <CardSubtitle>{`forks ${item.stargazers_count}`}</CardSubtitle>
+                        <CardSubtitle>
+                            <FontAwesomeIcon icon="star" style={{ color: 'yellow' }}/>
+                            {` starts ${item.forks}`}
+                        </CardSubtitle>
+                        <CardSubtitle>
+                            <FontAwesomeIcon icon="code-branch"/>
+                            {` forks ${item.stargazers_count}`}
+                        </CardSubtitle>
                         <CardSubtitle>{`forks ${item.language}`}</CardSubtitle>
                         <CardText>{item.description}</CardText>
                         </CardBody>

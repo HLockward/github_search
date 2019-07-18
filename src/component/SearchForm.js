@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Control, LocalForm, Errors} from 'react-redux-form';
 import { Button, FormGroup, InputGroupAddon, InputGroup,Col,Label,Input } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -75,7 +76,8 @@ class SearchForm extends Component{
                         </Col>
                         <Col md={2}>   
                             <Button color="primary" onClick={() => this.onForkBtnClick()} active={this.props.isForkSortAsc}>
-                                FORK {this.props.isForkSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i> }
+                                <FontAwesomeIcon icon="code-branch"/> 
+                                {this.props.isForkSortAsc ? <i className="fa fa-arrow-down fa-lg"></i> : <i className="fa fa-arrow-up fa-lg"></i> }
                             </Button>
                         </Col>
                         <Col md={2}>
